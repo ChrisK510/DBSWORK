@@ -79,12 +79,13 @@ where a.city = c.city
 --    by on the products table)
 
 
- Select c.name, c.city
+ Select c.name, 
+        c.city
  from customers c
  where city in
-    (select city
-     from products p
-     group by (p.city)
-     order by count(p.city) 
-     limit 1);
+       (select city
+        from products p
+        group by (p.city)
+        order by count(p.city) 
+        limit 1);
 
