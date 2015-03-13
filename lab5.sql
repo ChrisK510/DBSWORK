@@ -18,13 +18,12 @@ where o.aid = a.aid
 --    at least one order for a customer in Kyoto, sorted by pid
 --    from highest to lowest. Use Joins!
 
-select o2.pid
-from   orders o,
-       customers c,
-       orders o2
-where o.cid = c.cid
-   and o.aid = o2.aid
-   and c.city = 'Kyoto'
+select o2.pid 
+from orders o
+inner join customers c
+	on c.cid = o.cid
+inner join orders o2
+	on o2.aid = o.aid and c.city = 'Kyoto'
 order by pid desc;
 
 
@@ -77,6 +76,15 @@ where a.city = c.city
 	 
 -- 7. Show the name and the city of customers who live in the city that
 --    makes the fewest different kinds of products. (Use count and group
---    by on the products tabele)
- nnnn
+--    by on the products table)
+
+
+ Select c.name, c.city
+ from customers c
+ where city in
+    (select city
+     from products p
+     group by (p.city)
+     order by count(p.city) 
+     limit 1);
 
