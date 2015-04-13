@@ -1,0 +1,78 @@
+Chris Koriniskie
+Database Systems
+Lab08
+
+-- Purchasing table for the store
+CREATE TABLE purchases
+ (
+sid		CHARACTER(4) NOT NULL,
+	sku		CHARACTER(5) NOT NULL,
+	qty		INTEGER,
+	priceUSD	NUMERIC(6,2),
+	ordno		INTERGER NOT NULL,
+	ordDate 	DATE,
+	comments 	TEXT,
+	PRIMARY KEY (sid, sku)
+);
+
+-- Table for the clothing store
+
+CREATE TABLE clothes
+(
+	sku		CHARACTER(4) NOT NULL,
+	description	TEXT,
+	retailUSD	NUMERIC(5,2),
+	qtyOnHand	INTEGER,
+	PRIMARY KEY (sku)
+);
+
+-- Table for suppliers info
+
+CREATE TABLE suppliers
+(
+	sid		CHARACTER(4) NOT NULL,
+	street		TEXT,
+	city		TEXT,
+	state		CHARACTER(2),
+	zip		CHARACTER(5),
+	contactNum	CHARACTER(10),
+	payTerm	INTEGER,
+	PRIMARY KEY (sid)
+);   
+
+-- NOTE: payTerm in days!!
+
+	
+-- Purchases Table
+INSERT INTO purchases (sid, sku, qty, ordno, ordDate, comments)
+   VALUES(‘s001’ , ‘sk001’ , 10 , ‘320.50’ , ‘2015-01-15’ , ‘The first order’);
+INSERT INTO purchases (sid, sku, qty, ordno, ordDate, comments)
+   VALUES(‘s002’ , ‘sk002’ , 8 , ‘200.00’ , ‘2015-02-28’ , ‘Blue jean order’);
+INSERT INTO purchases (sid, sku, qty, ordno, ordDate, comments)
+   VALUES(‘s003’ , ‘sk003’ , 50 , ‘500.00’ , ‘2015-03-17’ , ‘Winter beanie order’);
+
+-- Clothes Table 
+INSERT INTO clothes (sku, description, retailUSD, qtyOnHand)
+   VALUES(‘sk001’ , ‘Red button down shirt’ , ’32.05’ , 200);
+INSERT INTO clothes (sku, description, retailUSD, qtyOnHand)
+   VALUES(‘sk002’ , ‘Blue jeans’ , ’25.00’ , 125);
+INSERT INTO clothes (sku, description, retailUSD, qtyOnHand)
+   VALUES(‘sk003’ , ‘Neff Beanies’ , ’10.00’ , 75);
+
+-- Suppliers Table
+INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
+   VALUES(‘s001’ , ‘Wilbur St.’ , ‘Honolulu’ , ‘HI’ , ‘32050’ , ‘13935557867’ , ‘30’);
+INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
+   VALUES(‘s002’ , ‘Database Drive’ , ‘Dataville’ , ‘NM’ , ‘78390’ , ‘17678995678’ , ‘90’);
+
+INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
+   VALUES(‘s001’ , ‘Main St.’ ,’Hopewell Jct.’ , ‘NY’ , ‘12533’ , ‘18454896767’ , ‘60’);
+
+-- 
+
+select c.sku,
+       
+from suppliers s,
+     clothes c,
+     purchases p
+where 
