@@ -4,13 +4,15 @@
 
 
 
-drop table if exists purchases;
-drop table if exists clothes;
-drop table if exists suppliers;
+drop table if exists purchaseInfo;
+drop table if exists purchaseMain;
+drop table if exists items;
+drop table if exists supplier;
+drop table if exists zipcode;
 
 -- Table for the clothing store
 
-CREATE TABLE clothes
+CREATE TABLE items
 (
 	sku		CHARACTER(5) NOT NULL,
 	description	TEXT,
@@ -22,28 +24,39 @@ CREATE TABLE clothes
 -- Table for suppliers info
 -- NOTE: payTerm in days!!
 
-CREATE TABLE suppliers
+CREATE TABLE supplier
 (
 	sid		CHARACTER(4) NOT NULL,
-	street		TEXT,
-	city		TEXT,
-	state		CHARACTER(2),
+	address		TEXT,
 	zip		CHARACTER(5),
 	contactNum	CHARACTER(10),
-	payTerm	INTEGER,
+	payTerm	        INTEGER,
 	PRIMARY KEY (sid)
-);   
+);  
 
-CREATE TABLE purchases
+create table zipode
+(
+	zip		character(5),
+	city		text,
+	state		text,
+	primary key (zip)
+);
+
+CREATE TABLE purchaseMain
  (
 	ordno		INTEGER NOT NULL,
-	sid		CHARACTER(4) NOT NULL references suppliers(sid),
-	sku		CHARACTER(5) NOT NULL references clothes(sku),
-	qty		INTEGER,
-	priceUSD	NUMERIC(6,2),
-	ordDate 	DATE,
-	info	 	TEXT,
+	sid		character (4) not null,
+	purDate 	DATE,
+	itemInfo	TEXT,
 	PRIMARY KEY (ordno)
+);
+
+CREATE TABLE purchaseInfo
+ (
+	ordno		INTEGER NOT NULL,
+	sku		character (5) not null,
+	priceUSD	numeric(6,2),
+	PRIMARY KEY (ordno,sku)
 );
 
 
