@@ -21,6 +21,7 @@ CREATE TABLE items
 	PRIMARY KEY (sku)
 );
 
+
 -- Table for suppliers info
 -- NOTE: payTerm in days!!
 
@@ -34,13 +35,15 @@ CREATE TABLE supplier
 	PRIMARY KEY (sid)
 );  
 
-create table zipode
+
+create table zipcode
 (
 	zip		character(5),
 	city		text,
 	state		text,
 	primary key (zip)
 );
+
 
 CREATE TABLE purchaseMain
  (
@@ -51,10 +54,13 @@ CREATE TABLE purchaseMain
 	PRIMARY KEY (ordno)
 );
 
+
+  
 CREATE TABLE purchaseInfo
  (
 	ordno		INTEGER NOT NULL,
 	sku		character (5) not null,
+	qty             integer,
 	priceUSD	numeric(6,2),
 	PRIMARY KEY (ordno,sku)
 );
@@ -63,37 +69,60 @@ CREATE TABLE purchaseInfo
 -- SQL statements
 	
 
--- Clothes Table 
-INSERT INTO clothes ( sku, description, retailUSD, qtyOnHand )
+-- Items Table 
+INSERT INTO items ( sku, description, retailUSD, qtyOnHand )
    VALUES('sk001', 'shirt', 32.05, 200);
    
-INSERT INTO clothes ( sku, description, retailUSD, qtyOnHand )
+INSERT INTO items ( sku, description, retailUSD, qtyOnHand )
    VALUES('sk002', 'jeans', 25.00, 125);
    
-INSERT INTO clothes (sku, description, retailUSD, qtyOnHand)
+INSERT INTO items (sku, description, retailUSD, qtyOnHand)
    VALUES('sk003', 'beanies', 10.00, 75);
 
-select * from clothes
 
 -- Suppliers Table
-INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
-   VALUES('s001', 'Wilbur St', 'Honolulu', 'HI', '32050', '1393557867', 30);
+INSERT INTO supplier(sid, address, zip, contactNum, payTerm)
+   VALUES('s001', '200 Wilbur St','32050', '1393557867', 30);
    
-INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
-   VALUES('s002', 'Database Dr.', 'Dataville', 'NM', '78390', '1767895678', 90);
+INSERT INTO supplier(sid, address, zip, contactNum, payTerm)
+   VALUES('s002', '1010 Database Dr.', '78390', '1767895678', 90);
    
-INSERT INTO suppliers(sid, street, city, state, zip, contactNum, payTerm)
-   VALUES('s003', 'Main St.', 'Hopewell Jct.', 'NY', '12582', '8452264000', 30);
+INSERT INTO supplier(sid, address, zip, contactNum, payTerm)
+   VALUES('s003', '343 Main St.', '12582', '8452264000', 30);
 
--- Purchases Table
-INSERT INTO purchases( sid, sku, info, qty, priceUSD, ordno, ordDate )
-   VALUES('s001', 'sk001', 'Shirts', 10, 320.50, 1001, '2015-01-15');
 
-INSERT INTO purchases( sid, sku, info, qty, priceUSD, ordno, ordDate )
-   VALUES('s002', 'sk002', 'Jeans', 8, 200.00, 1002, '2015-02-27');
+-- Zipcde table
+insert into zipcode(zip, city, state)
+  values ('32050', 'Phoenix', 'Arizona');
 
-INSERT INTO purchases( sid, sku, info, qty, priceUSD, ordno, ordDate )
-   VALUES('s001', 'sk001', 'Beanies', 50, 500.00, 1003, '2015-03-17');
+insert into zipcode(zip, city, state)
+  values ('78390', 'Honolulu', 'Hawaii');
+
+insert into zipcode(zip, city, state)
+  values ('12582', 'Stormville', 'New York');
+  
+
+-- Purchases Main Table
+insert into purchaseMain(ordno, sid, purDate, itemInfo)
+  values ('1001', 's001', '2015-01-15', 'Red shirt');
+
+insert into purchaseMain(ordno, sid, purDate, itemInfo)
+  values ('1002', 's002', '2015-02-20', 'Blue Jeans');
+
+insert into purchaseMain(ordno, sid, purDate, itemInfo)
+  values ('1003', 's003', '2015-03-17', 'Neff Beanies');
+
+
+
+--Purhaces Info Table
+insert into purchaseInfo(ordno, sku, qty, priceUSD)
+  values ('1001', 'sk001', 10, 320.50);
+
+insert into purchaseInfo(ordno, sku, qty, priceUSD)
+  values ('1002', 'sk002', 40, 1000.00);
+
+insert into purchaseInfo(ordno, sku, qty, priceUSD)
+  values ('1003', 'sk003', 150, 1500.00);
    
 
   
