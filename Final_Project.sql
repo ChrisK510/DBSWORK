@@ -355,3 +355,48 @@ insert into groups(gid,group_name)
 insert into groups(gid,group_name)
   values('g004', 'Girls Junior');
 
+-------------------------------------------------
+-- View  --
+
+create view golfClubsinstore as
+select p.prodID as product_ID, g.prodID as clubs
+from products p, golfclubs g
+where p.prodID = g.prodID
+
+
+-- Stored Procedure --
+
+ create function getAge(char(4)) returns integer as
+$$
+declare
+   personID  char(4)  := $1;
+   age integer;
+   
+begin 
+   select extract(year from age((select birth_date
+				 from people
+				 where pid = personID))) into age;
+   return age;
+end;
+$$ 
+language plpgsql;
+
+
+-- Reports --
+
+select 
+
+-- Triggers --
+
+-- Check if person is a too old to be a Junior Member. You have to be under 18 to be a junior member. --
+
+-- Security --
+	-- Add and Admin--
+
+create role admin
+grant select, 
+update, 
+insert,
+alter, 
+on all tables in schema public 
+to admin;
